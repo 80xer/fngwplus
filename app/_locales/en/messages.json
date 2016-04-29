@@ -1,0 +1,10 @@
+{
+  "appName": {
+    "message": "fngwplus",
+    "description": "The name of the application"
+  },
+  "appDescription": {
+    "message": "Plug-in with useful features for fnguide groupware.",
+    "description": "The description of the application"
+  }
+}
