@@ -95,7 +95,9 @@ gulp.task('buildJs', () => {
 gulp.task('buildJs:fngw', () => {
 	var ctx = {CHROME: true}
 	const src = [
-		'app/scripts.babel/**/*.js',
+		'app/scripts.babel/constants.js',
+		'app/scripts.babel/util.js',
+		'app/scripts.babel/fngwplus.js',
 		'!app/scripts.babel/background.js',
 		'!app/scripts.babel/chromereload.js',
 		'!app/scripts.babel/contentscript.js',
