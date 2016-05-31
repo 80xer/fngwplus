@@ -12,6 +12,7 @@ gulp.task('extras', () => {
     'app/*.*',
     'app/_locales/**',
     '!app/scripts.babel',
+		'!app/styles.less',
     '!app/*.json',
     '!app/*.html',
   ], {
@@ -50,6 +51,14 @@ gulp.task('images', () => {
     .pipe(gulp.dest('dist/images'));
 });
 
+gulp.task('styles', () => {
+  return gulp.src('app/styles.less/fngwplus.less')
+		.pipe($.plumber())
+    .pipe($.less({relativeUrls: true}))
+    .pipe($.autoprefixer({cascade: true}))
+    .pipe(gulp.dest('app/styles'))
+});
+
 gulp.task('html',  () => {
   return gulp.src('app/*.html')
     .pipe($.useref({searchPath: ['.tmp', 'app', '.']}))
@@ -79,17 +88,52 @@ gulp.task('chromeManifest', () => {
   .pipe(gulp.dest('dist'));
 });
 
-gulp.task('babel', () => {
-  return gulp.src('app/scripts.babel/**/*.js')
+gulp.task('buildJs', () => {
+	return runSequence(['buildJs:fngw', 'buildJs:chrome']);
+})
+
+gulp.task('buildJs:fngw', () => {
+	var ctx = {CHROME: true}
+	const src = [
+		'app/scripts.babel/**/*.js',
+		'!app/scripts.babel/background.js',
+		'!app/scripts.babel/chromereload.js',
+		'!app/scripts.babel/contentscript.js',
+		'!app/scripts.babel/options.js'
+	]
+
+  return gulp.src(src)
       .pipe($.babel({
         presets: ['es2015']
       }))
+			.pipe($.concat('fngwplus.js'))
+			.pipe($.preprocess({context: ctx}))
       .pipe(gulp.dest('app/scripts'));
 });
 
+gulp.task('buildJs:chrome', () => {
+	var ctx = {CHROME: true}
+	const src = [
+		'app/scripts.babel/background.js',
+		'app/scripts.babel/chromereload.js',
+		'app/scripts.babel/contentscript.js',
+		'app/scripts.babel/options.js'
+	]
+
+  return gulp.src(src)
+      .pipe($.babel({
+        presets: ['es2015']
+      }))
+			.pipe(gulp.dest('app/scripts'));
+});
+
+gulp.task('libs', () => {
+	gulp.src('app/libs/**/*.js').pipe(gulp.dest('app/scripts'))
+})
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
-gulp.task('watch', ['lint', 'babel', 'html'], () => {
+gulp.task('watch', ['lint', 'libs', 'buildJs', 'styles', 'html'], () => {
   $.livereload.listen();
 
   gulp.watch([
@@ -100,12 +144,13 @@ gulp.task('watch', ['lint', 'babel', 'html'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'babel']);
+  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'libs', 'buildJs']);
+	gulp.watch('app/styles.less/**/*.less', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });
 
 gulp.task('size', () => {
-  return gulp.src('dist/**/*').pipe($.size({title: 'build', gzip: true}));
+  return gulp.src('dist/**/*').pipe($.size({title: 'build size', gzip: true}));
 });
 
 gulp.task('wiredep', () => {
@@ -125,8 +170,12 @@ gulp.task('package', function () {
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'babel', 'chromeManifest',
-    ['html', 'images', 'extras'],
+    'lint', 'libs', 'buildJs', 'styles', 'chromeManifest',
+    [
+			'html',
+			'images',
+			'extras'
+		],
     'size', cb);
 });
 
