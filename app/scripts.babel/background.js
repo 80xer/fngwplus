@@ -9,6 +9,10 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	}, (res) => {
 		if (chrome.runtime.lastError || res[0]) return
 
+		const cssFiles = [
+			'styles/fngwplus.css'
+		]
+
 		const jsFiles = [
 			'scripts/jquery.js',
 			'scripts/fngwplus.js'
@@ -21,6 +25,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 		}
 
 		eachTask([
+			(cb) => eachItem(cssFiles, inject('insertCSS'), cb),
 			(cb) => eachItem(jsFiles, inject('executeScript'), cb)
 		])
 	})

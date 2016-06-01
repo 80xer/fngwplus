@@ -15,30 +15,11 @@
     ]
   },
   "permissions": [
-    "tabs",
-    "http://*/*",
-    "https://*/*",
-    "webRequest",
-    "*://*.google.com/"
-  ],
-  "options_ui": {
-    "page": "options.html",
-    "chrome_style": true
-  },
-  "content_scripts": [
-    {
-      "matches": [
-        "http://*/*",
-        "https://*/*"
-      ],
-      "js": [
-        "scripts/contentscript.js"
-      ],
-      "run_at": "document_end",
-      "all_frames": false
-    }
+    "http://gw.fnguide.com/*",
+		"storage"
   ],
   "omnibox": {
     "keyword": "OMNIBOX-KEYWORD"
-  }
+  },
+	"web_accessible_resources": ["img/fngwplus.png"]
 }
