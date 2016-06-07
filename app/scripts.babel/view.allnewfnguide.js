@@ -1,5 +1,5 @@
 const TASK_CONTENT_SELECTOR = '#content .content_top>div'
-const BTN_WBS_TEMPLATE = '<div class="toggleWbs fngw_plus_btn_wrapper"><span class="fngw_plus_btn">WBS 보기</span></div>'
+const BTN_WBS_TEMPLATE = '<div class="toggleWbs fngw_plus_btn_wrapper"><span class="fngw_plus_btn wbs_show">WBS 보기</span></div>'
 const WBS_URL = 'https://docs.google.com/spreadsheets/d/1CkyanuO1itSFlM4xwzZl2kOks9CdgD82_44oehk2Ue8/edit?usp=sharing'
 const CATE = [
 	'기획',
@@ -22,8 +22,6 @@ class AllNewFnguide {
 	}
 
 	setView() {
-		// todo: wbs 보기 버튼 클리후 뷰 새로 셋팅되는 버그
-		console.log('set task wbs view');
 		const that = this
 		this._createBtnWBS()
 		this._createBtnFilters()
@@ -34,14 +32,13 @@ class AllNewFnguide {
 		}
 
 		function detectBtnRemove() {
-			if ($('span.fngw_plus_btn:contains("WBS 보기")').length <= 0) {
+			if ($('span.fngw_plus_btn.wbs_show').length <= 0) {
 				that.setView()
 			}
 		}
 	}
 
 	_createBtnWBS() {
-		console.log('create wbs btn');
 		const that = this
 		$('.toggleWbs').remove();
     var $btnToggleWbs = $(BTN_WBS_TEMPLATE);
@@ -52,18 +49,15 @@ class AllNewFnguide {
 	}
 
 	_toggleWbs() {
-		console.log(this.showWBS)
 		if (this.showWBS) {
       $('#content .content_page').show();
       $('.wbsWrap').hide();
       $('.toggleWbs .fngw_plus_btn').text('WBS 보기');
     } else {
-			console.log('wbs 보여라')
-      this._insertWBS();
+		  this._insertWBS();
       $('#content .content_page').hide();
       $('.wbsWrap').show();
       $('.toggleWbs .fngw_plus_btn').text('업무 보기');
-			console.log($('.toggleWbs .fngw_plus_btn').text());
     }
     this.showWBS = !this.showWBS;
 	}
