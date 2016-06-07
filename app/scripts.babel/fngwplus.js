@@ -33,6 +33,7 @@ $(document).ready(() => {
 			[PAGE.LOGIN]: [new LoginView()],
 			[PAGE.HOME]: [new DutyView()],
 			[PAGE.EHR]: [new EhrView()],
+			[PAGE.EHRMY]: [new EhrView()],
 			[PAGE.EHRCOMP]: [new EhrCompView()],
 			[PAGE.TASK_ALL_NEW_FNGUIDE]: [new AllNewFnguide()]
 		};
