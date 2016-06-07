@@ -15,7 +15,8 @@
     ]
   },
   "permissions": [
-    "http://gw.fnguide.com/*",
+    "https://gw.fnguide.com/login",
+	  "http://gw.fnguide.com/*",
 		"https://docs.google.com/spreadsheets/d/1-abxTWAXe3ncueigz-b9wHCNl32ayNmsBR9Wn-I3aSo/pubhtml",
 		"https://docs.google.com/spreadsheets/d/1CkyanuO1itSFlM4xwzZl2kOks9CdgD82_44oehk2Ue8/edit?usp=sharing",
 		"storage"

@@ -30,6 +30,7 @@ $(document).ready(() => {
 		const $document = $(document)
 		const $html = $('html')
 		const locationPathView = {
+			[PAGE.LOGIN]: [new LoginView()],
 			[PAGE.HOME]: [new DutyView()],
 			[PAGE.EHR]: [new EhrView()],
 			[PAGE.EHRCOMP]: [new EhrCompView()],
@@ -65,6 +66,7 @@ $(document).ready(() => {
 		function startFnGwPlus() {
 			createPluslogo()
 			let locpath = location.pathname
+			console.log(locpath)
 			setViews(locationPathView[locpath])
 			stopViews(locpath)
 		}

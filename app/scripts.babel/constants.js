@@ -13,6 +13,7 @@ const EVENT = {
 }
 
 const PAGE = {
+	LOGIN: '/login',
 	HOME: '/app/home',
 	EHR: '/app/ehr',
 	EHRCOMP: '/app/ehr/attendance/companylist',

@@ -68,8 +68,8 @@ class AllNewFnguide {
     }
     var $wbsWrap = $('<div class="wbsWrap"></div>');
     $wbsWrap.hide();
-    var $wbsIfram = $('<iframe src="' + WBS_URL + '" width="100%" height="' + ($(window).height() - $('header.go_header').height() - $('header.content_top').outerHeight() - 20) + 'px"></iframe>');
-    $wbsWrap.append($wbsIfram).appendTo('#160.go_renew');
+    var $wbsIframe = $('<iframe src="' + WBS_URL + '" width="100%" height="' + ($(window).height() - $('header.go_header').height() - $('header.content_top').outerHeight() - 20) + 'px"></iframe>');
+    $wbsWrap.append($wbsIframe).appendTo('#160.go_renew');
   }
 
 	_createBtnFilters() {
