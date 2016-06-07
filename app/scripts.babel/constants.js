@@ -9,7 +9,8 @@ const DEFAULTS = {
 }
 
 const EVENT = {
-  LOC_CHANGE    : 'fngwplus:location'
+  LOC_CHANGE: 'fngwplus:location',
+	TOGGLE_CAL: 'fngwplus:toggle_cal'
 }
 
 const PAGE = {

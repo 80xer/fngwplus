@@ -10,27 +10,29 @@ class EhrView {
 		this.$ehr = $(BTN_TEMPLATE)
 		this.target = [TOOL_BAR_SELECTOR, LIST_SELECTOR]
 		this.showing = false
+		const $document = $(document)
+		$document
+			.on(EVENT.TOGGLE_CAL, () => {
+				this.showing = !this.showing
+			})
 	}
 
 	setView() {
 		const that = this
-		$('body').on('DOMNodeRemoved', LIST_SELECTOR, function(){
+		$('body').on('DOMNodeRemoved', '#content', function(){
 			asyncDom('#attndMyList tbody tr', function() {
-				that._reStart()
+				that._start()
 			})
-    });
-		this.showing = false
+		});
+
 		this._start()
 	}
 
 	_start() {
-		var cal = this._createCalendar()
-		this.showing = cal.toggle()
-	}
-
-	_reStart() {
-		this.showing = !this.showing
-		this._start()
+		if ($('.calendar-table.toggleView').length <= 0) {
+			var cal = this._createCalendar()
+			cal.toggle()
+		}
 	}
 
 	_createCalendar(){
@@ -48,7 +50,7 @@ class CalendarView {
 		const that = this
     $(document).off('click', this.btn);
     $(document).on('click', this.btn, function() {
-			that.toggle()
+			that.toggle(true)
 		});
     var curDate = $('.current_date .date').text().replace('.','');
     var year = parseInt(curDate.substring(0,4),10);
@@ -70,7 +72,7 @@ class CalendarView {
     })
 	}
 
-	toggle() {
+	toggle(event_flag) {
     this.showing = !this.showing;
 		if(this.showing) {
       $('#attndMyList').hide();
@@ -81,6 +83,8 @@ class CalendarView {
       $('.calendar-table ').hide();
       $('#btnCalendarView').text('캘린더 보기');
     }
-		return this.showing
+		if (event_flag) {
+			$(document).trigger(EVENT.TOGGLE_CAL)
+		}
 	}
 }
