@@ -75,7 +75,6 @@ class EhrCompView {
       });
 
       function setActiveFilter(sKeywordSelector) {
-				console.log('filtering')
         $('li.btn_tool_depts').removeClass('active');
         $('li.btn_tool_depts').filter(function() {
 					return $(sKeywordSelector).val().indexOf($(this).text()) >= 0 ? true : false
