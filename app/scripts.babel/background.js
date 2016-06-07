@@ -15,6 +15,7 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 
 		const jsFiles = [
 			'scripts/jquery.js',
+			'scripts/cal.js',
 			'scripts/fngwplus.js'
 		]
 

@@ -95,9 +95,9 @@ gulp.task('buildJs', () => {
 gulp.task('buildJs:fngw', () => {
 	var ctx = {CHROME: true}
 	const src = [
-		'app/scripts.babel/view.*.js',
 		'app/scripts.babel/constants.js',
 		'app/scripts.babel/util.js',
+		'app/scripts.babel/view.*.js',
 		'app/scripts.babel/fngwplus.js',
 		'!app/scripts.babel/background.js',
 		'!app/scripts.babel/chromereload.js'
@@ -130,6 +130,24 @@ gulp.task('libs', () => {
 	gulp.src('app/libs/**/*.js').pipe(gulp.dest('app/scripts'))
 })
 
+gulp.task('copy2dist', ['copyjs', 'copystyle']);
+
+gulp.task('copyjs', () => {
+	gulp.src([
+		'app/scripts/*',
+		'!app/scripts/background.js',
+		'!app/scripts/chromereload.js'
+	])
+	.pipe($.uglify())
+	.pipe(gulp.dest('dist/scripts'));
+})
+
+gulp.task('copystyle', () => {
+	gulp.src('app/styles/*')
+	.pipe($.cleanCss({compatibility: '*'}))
+	.pipe(gulp.dest('dist/styles'))
+})
+
 gulp.task('clean', del.bind(null, ['.tmp', 'dist']));
 
 gulp.task('watch', ['lint', 'libs', 'buildJs', 'styles', 'html'], () => {
@@ -143,7 +161,8 @@ gulp.task('watch', ['lint', 'libs', 'buildJs', 'styles', 'html'], () => {
     'app/_locales/**/*.json'
   ]).on('change', $.livereload.reload);
 
-  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'libs', 'buildJs']);
+	gulp.watch('app/libs/**/*', ['libs'])
+  gulp.watch('app/scripts.babel/**/*.js', ['lint', 'buildJs']);
 	gulp.watch('app/styles.less/**/*.less', ['styles']);
   gulp.watch('bower.json', ['wiredep']);
 });
@@ -169,7 +188,7 @@ gulp.task('package', function () {
 
 gulp.task('build', (cb) => {
   runSequence(
-    'lint', 'libs', 'buildJs', 'styles', 'chromeManifest',
+    'lint', 'libs', 'buildJs', 'styles', 'chromeManifest', 'copy2dist',
     [
 			'html',
 			'images',

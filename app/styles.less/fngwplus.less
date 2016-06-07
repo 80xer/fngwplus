@@ -1,3 +1,4 @@
+// 플러스 로고
 .plusimg {
   position: absolute;
   top: 0px;
@@ -11,6 +12,7 @@
 
 }
 
+// 당직 알림
 .dutyWrap {
 	&.bigtoday {
 		border: 2px solid #999!important;
@@ -56,4 +58,188 @@
 	    color: #F56E1E;
 		}
 	}
+}
+
+
+// 캘린더/리스트 토글 버튼
+.fngw_plus_btn_wrapper {
+  top: 0;
+  right: 0;
+  line-height: 15px;
+  text-align: right;
+  padding: 0px;
+
+	.fngw_plus_btn {
+    font-size: 25px;
+    /* border: 1px solid #2196F3; */
+    padding: 5px 10px;
+    /* border-radius: 1px; */
+    margin-left: 20px;
+    font-weight: bold;
+    cursor: pointer;
+    -webkit-box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+    transition: background-color .3s,color .15s,box-shadow .3s,opacity 0.3s;
+	}
+
+	.fngw_plus_btn:hover {
+    -webkit-box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+    box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2),0 6px 20px 0 rgba(0,0,0,0.19);
+	}
+
+	&#calendarViewDiv {
+    position:absolute;
+    top: 3px;
+    right: 10px;
+
+		#btnCalendarView {
+	    background-color: #E9E9E9;
+	    font-size: 13px;
+		}
+
+		#btnCalendarView:hover {
+	    background-color: #fff;
+	    color: #37ACB3;
+		}
+	}
+
+	&.toggleWbs {
+	  position: absolute;
+	  top: 12px;
+	  line-height: 20px;
+	  right: auto;
+  	left: 350px;
+
+		.fngw_plus_btn {
+	    background-color: #F8F8F8;
+	    color: #9F9F9F;
+	    font-size: 18px;
+	    padding: 7px 12px;
+	    width: 120px;
+	    display: block;
+	    box-sizing: border-box;
+	    text-align: center;
+		}
+
+		.fngw_plus_btn:hover {
+		  background-color: #ffffff;
+		  color: #37ACB3;
+		}
+	}
+
+	&.filters.task {
+		padding: 7px 5px 5px 5px;
+    display: inline-block;
+
+		span.fngw_plus_btn {
+		  background-color: #F8F8F8;
+		  color: #9F9F9F;
+		  font-size: 13px;
+		  /*font-weight: normal;*/
+		  line-height: 13px;
+		  margin-left: 10px;
+		  padding: 7px 10px;
+		}
+
+		span.fngw_plus_btn:hover,
+		span.fngw_plus_btn.active {
+		  background-color: #FFFFFF;
+		  color: #37ACB3;
+		}
+	}
+}
+
+// 캘린더
+#attndMyList {
+	display: none;
+}
+
+table.type_normal.calendar-table.toggleView {
+    display: none;
+
+		thead {
+			tr {
+				th.calendar-header-day {
+			    text-align: center !important;
+			    background-color: #ededed;
+			    border-top: 1px solid #e6e6e6;
+			    height: 28px;
+			    border-bottom: 1px solid #a2a2a2;
+			    color: #555;
+					cursor: default;
+				}
+				th.calendar-header-day:nth-child(1) {
+			    background-color: #f3f3f3;
+			    /*width: 100px;*/
+			    color: #FF000A;
+				}
+			}
+		}
+		tbody {
+			tr {
+				td {
+				    border-bottom: 1px solid #d2e4e6;
+						div.late {
+						    color: #f14f4f;
+						}
+						div.modify {
+						    color: #33cfd7;
+						}
+				}
+				td.calendar-day {
+				    width: calc(100%/7);
+				    height: 80px;
+				    border-left: 1px solid rgb(210, 228, 230);
+						.day {
+						    font-size: 13px;
+						    font-weight: bold;
+						    margin-bottom: 10px;
+						}
+				}
+				td.calendar-day:nth-child(1) {	// 일요일
+			    background-color: #f3f3f3;
+			    /*width: 100px;*/
+			    color: #FF000A;
+				}
+				td.calendar-day {
+				    background-color: #fff;
+				}
+				td.calendar-day:nth-child(7) { // 토요일
+					background-color: #f3f3f3;
+			    /*width: 100px;*/
+			    color: #2261f8;
+				}
+				td.calendar-day:hover {
+				    background-color: #e9f5f6 !important;
+				}
+			}
+			tr:hover,
+			tr.active {
+			    background-color: #fff;
+			    border-color: #8E8E8E !important;
+			}
+		}
+}
+
+ul#dept_btns {
+  padding: 10px;
+  line-height: 45px;
+	.btn_tool_depts.fngw_plus_btn {
+    display: inline-block;
+    line-height: 15px;
+    font-size: 15px;
+    margin-left: 5px;
+    padding: 10px 15px;
+    background-color: #F3F2F2;
+    color: #777;
+	}
+
+	.btn_tool_depts.fngw_plus_btn:hover, .btn_tool_depts.fngw_plus_btn.active {
+    background-color: #ffffff;
+    color: #37ACB3;
+	}
+}
+
+.wbsWrap iframe {
+  border: 1px solid #d1d1d1;
 }

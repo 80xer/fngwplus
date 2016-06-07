@@ -33,3 +33,34 @@ function parallel(arr, iter, done) {
     if (--total === 0) done()
   }
 }
+
+// async run by dom
+function asyncDom(target, cb) {
+	if (!target) return
+	var jsInitChecktimer = setInterval (checkForJS_Finish, 111);
+	function checkForJS_Finish() {
+		if (checkDom(target)) {
+			clearInterval(jsInitChecktimer);
+			cb && cb()
+		}
+	}
+}
+
+// check dom
+function checkDom(target) {
+	var length = 0;
+	var targetLength = 0
+	var flag = true;
+	if (Array.isArray(target)) {
+		targetLength = target.length
+		for (var i = 0; i < target.length; i++) {
+			flag = flag && checkDom(target[i])
+		}
+	} else {
+		targetLength = 1
+		length = $(target).length
+		flag = (length >= targetLength)
+	}
+
+	return flag
+}

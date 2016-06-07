@@ -11,36 +11,40 @@ $(document).ready(() => {
 
 	function createPluslogo() {
 		const url = location
-		var imgPath = chrome.extension.getURL('/img/fngwplus.png');
-    var jsInitChecktimer = setInterval (checkForJS_Finish, 111);
-    function checkForJS_Finish() {
-      if ($('h1>a>img.logo').length > 0 && $('h1>a>img.logo.plusimg').length == 0) {
-        clearInterval(jsInitChecktimer);
-        var $plusImg = $('<img class="logo plusimg" src="' + imgPath + '">');
-        // console.log('add logo');
-        $plusImg.insertAfter('h1>a>img.logo');
-        setTimeout(function() {
-          $plusImg.addClass('show');
-        }, 500);
-      }
-    }
+		var imgPath = chrome.extension.getURL('/images/fngwplus.png');
+
+		asyncDom('h1>a>img.logo', function() {
+			if ($('h1>a>img.logo.plusimg').length > 0) {
+				$('h1>a>img.logo.plusimg').remove()
+			}
+			var $plusImg = $('<img class="logo plusimg" src="' + imgPath + '">');
+			// console.log('add logo');
+			$plusImg.insertAfter('h1>a>img.logo');
+			setTimeout(function() {
+				$plusImg.addClass('show');
+			}, 500);
+		})
 	}
 
 	function loadExtension() {
 		const $document = $(document)
 		const $html = $('html')
-		const $dutyView = new DutyView()
-		const $ehrView = new EhrView()
+		const locationPathView = {
+			[PAGE.HOME]: [new DutyView()],
+			[PAGE.EHR]: [new EhrView()],
+			[PAGE.EHRCOMP]: [new EhrCompView()],
+			[PAGE.TASK_ALL_NEW_FNGUIDE]: [new AllNewFnguide()]
+		};
+
+		$html.addClass(ADDON_CLASS)
+		let firstLoad = true, pathname, hash
 
 		$document
 			.on(EVENT.LOC_CHANGE, () => startFnGwPlus())
 
-		$html.addClass(ADDON_CLASS)
-		let firstLoad = true, href, hash
-
     function detectLocChange() {
-      if (location.href !== href || location.hash !== hash) {
-        href = location.href
+      if (location.pathname !== pathname || location.hash !== hash) {
+        pathname = location.pathname
         hash = location.hash
 
         if (firstLoad) {
@@ -49,7 +53,7 @@ $(document).ready(() => {
         else {
           setTimeout(() => {
             $(document).trigger(EVENT.LOC_CHANGE)
-          }, 300) // Wait a bit for pjax DOM change
+          }, 300)
         }
       }
       setTimeout(detectLocChange, 200)
@@ -60,23 +64,37 @@ $(document).ready(() => {
 
 		function startFnGwPlus() {
 			createPluslogo()
-			console.log('in start fn gw plus')
-			// 페이지별로 알맞은 뷰를 append, show 처리
 			let locpath = location.pathname
-			if (!!~locpath.indexOf(PAGE.HOME)) checkDom($dutyView)
-			if (!!~locpath.indexOf(PAGE.EHR)) checkDom($ehrView)
+			setViews(locationPathView[locpath])
+			stopViews(locpath)
 		}
 
-		function checkDom(view) {
-			console.log('checkDom',view)
+		function setViews(views) {
+			if (!views || views.length === 0) {
+				return;
+			}
+
+			for (var i = 0; i < views.length; i++) {
+				checkView(views[i])
+			}
+		}
+
+		function checkView(view) {
 			var target = view.target
-			var jsInitChecktimer = setInterval (checkForJS_Finish, 111);
-			function checkForJS_Finish() {
-				if ($(target).length > 0) {
-					clearInterval(jsInitChecktimer);
-					!function() {
-						view.setView()
-					}()
+			if (!target) return
+			asyncDom(target, function() {
+				view.setView()
+			})
+		}
+
+		function stopViews(locpath) {
+			for (var page in locationPathView) {
+				if (locationPathView.hasOwnProperty(page)) {
+					if(page !== locpath) {
+						for (var i = 0; i < locationPathView[page].length; i++) {
+							locationPathView[page][i].stop && locationPathView[page][i].stop()
+						}
+					}
 				}
 			}
 		}

@@ -1,4 +1,5 @@
 const DUTY_WEB_URL = 'https://docs.google.com/spreadsheets/d/1-abxTWAXe3ncueigz-b9wHCNl32ayNmsBR9Wn-I3aSo/pubhtml'
+// const DUTY_WEB_URL = 'https://docs.google.com/spreadsheets/d/1EeC7Ze8k9RKbusCybS3Q7bUa9PIOP1YCjG4F0bWAkws/pubhtml'
 const BIG_TODAY_TEMPLATE = '<div class="dutyWrap go-gadget go-gadget-99999 bigtoday">오늘당직</div>'
 const CUR_DATE_SELECTOR = '.current_time_wrap .date'
 const WEEK_DAY_NAME = [
@@ -59,13 +60,9 @@ class DutyView {
       url: DUTY_WEB_URL
 	  }).done(function(data){
       var $dutyDoc = $($.parseHTML(data));
-      var jsInitChecktimer = setInterval (checkForJS_Finish, 111);
-      function checkForJS_Finish() {
-        if ($('.profile .info .name').length > 0) {
-          clearInterval(jsInitChecktimer);
-          that.checkDutyName($dutyDoc);
-        }
-      }
+			asyncDom('.profile .info .name', function() {
+				that.checkDutyName($dutyDoc);
+			})
 		})
 	}
 
@@ -133,7 +130,8 @@ class DutyView {
       var $dutyDiv = $('<div class="dutyWrap ' + colorClass + '"><span class="dayNotice">' + dayNotice + '</span><span class="dutyNotice">' + dutyNotice + '</span></div>');
       $dutyDiv.insertAfter('.current_time_wrap');
 			if (diffDate === 0 ) {
-        (function blink() {
+				this.$duty.insertBefore('.go-gadget.go-gadget-26');
+				(function blink() {
             $('.dutyWrap.today .dayNotice').fadeOut(termBlink).fadeIn(termBlink, blink);
         })();
     	}
@@ -141,7 +139,6 @@ class DutyView {
 	}
 
 	setView() {
-		this.$duty.insertBefore('.go-gadget.go-gadget-26')
 		this.getDutyDate()
 	}
 }

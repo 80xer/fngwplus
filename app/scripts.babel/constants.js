@@ -14,5 +14,7 @@ const EVENT = {
 
 const PAGE = {
 	HOME: '/app/home',
-	EHR: '/app/ehr'
+	EHR: '/app/ehr',
+	EHRCOMP: '/app/ehr/attendance/companylist',
+	TASK_ALL_NEW_FNGUIDE: '/app/task/folder/160/task'
 }
