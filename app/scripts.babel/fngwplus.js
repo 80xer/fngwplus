@@ -67,7 +67,6 @@ $(document).ready(() => {
 		function startFnGwPlus() {
 			createPluslogo()
 			let locpath = location.pathname
-			console.log(locpath)
 			setViews(locationPathView[locpath])
 			stopViews(locpath)
 		}
