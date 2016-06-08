@@ -24,5 +24,6 @@
   "omnibox": {
     "keyword": "OMNIBOX-KEYWORD"
   },
-	"web_accessible_resources": ["images/fngwplus.png"]
+	"web_accessible_resources": ["images/fngwplus.png"],
+	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
 }
