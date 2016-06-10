@@ -9,25 +9,6 @@ $(document).ready(() => {
 		})
 	}
 
-	function createPluslogo() {
-		const url = location
-		var imgPath = chrome.extension.getURL('/images/fngwplus.png');
-
-		asyncDom('h1>a>img.logo', function() {
-			if ($('h1>a>img.logo.plusimg').length > 0) {
-				console.log('remove logo');
-				$('h1>a>img.logo.plusimg').remove()
-			}
-			var $plusImg = $('<img class="logo plusimg" src="' + imgPath + '">');
-			// console.log('add logo');
-			$plusImg.insertAfter('h1>a>img.logo');
-			setTimeout(function() {
-				$plusImg.addClass('show');
-			}, 500);
-			console.log('make logo');
-		})
-	}
-
 	function loadExtension() {
 		const $document = $(document)
 		const $html = $('html')
@@ -40,12 +21,27 @@ $(document).ready(() => {
 			[PAGE.TASK_ALL_NEW_FNGUIDE]: [new AllNewFnguide()]
 		};
 
+		var imgPath = chrome.extension.getURL('/images/fngwplus.png');
+		var $plusImg = $('<img class="logo plusimg" src="' + imgPath + '">');
+
 		$html.addClass(ADDON_CLASS)
 		let firstLoad = true, pathname, hash
 
 		$document
 			.on(EVENT.LOC_CHANGE, () => startFnGwPlus())
 
+		function ga() {
+			window._gaq = [];
+			window._gaq.push(['_setAccount', 'UA-78966622-1']);
+			window._gaq.push(['_trackPageview']);
+
+			(function() {
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = 'https://ssl.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+			})();
+		}
+		
     function detectLocChange() {
       if (location.pathname !== pathname || location.hash !== hash) {
         pathname = location.pathname
@@ -63,24 +59,30 @@ $(document).ready(() => {
       setTimeout(detectLocChange, 200)
     }
 
+		var createPluslogo = function () {
+			ga();
+
+			createPluslogo = function () {
+				if ($('h1>a>img.logo.plusimg').length === 0) {
+					var $plusImgClone = $plusImg.clone();
+					$plusImgClone.insertAfter('h1>a>img.logo');
+					setTimeout(function() {
+						$plusImgClone.addClass('show');
+					}, 500);
+				}
+			}
+
+			createPluslogo();
+		}
+
     detectLocChange()
 		startFnGwPlus()
 
 		function startFnGwPlus() {
-			createPluslogo();
+			asyncDom('h1>a>img.logo', createPluslogo)
 			let locpath = location.pathname;
 			setViews(locationPathView[locpath]);
 			stopViews(locpath);
-
-			window._gaq = [];
-			window._gaq.push(['_setAccount', 'UA-78966622-1']);
-			window._gaq.push(['_trackPageview']);
-
-			(function() {
-				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-				ga.src = 'https://ssl.google-analytics.com/ga.js';
-				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-			})();
 		}
 
 		function setViews(views) {
