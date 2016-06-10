@@ -15,6 +15,7 @@ $(document).ready(() => {
 
 		asyncDom('h1>a>img.logo', function() {
 			if ($('h1>a>img.logo.plusimg').length > 0) {
+				console.log('remove logo');
 				$('h1>a>img.logo.plusimg').remove()
 			}
 			var $plusImg = $('<img class="logo plusimg" src="' + imgPath + '">');
@@ -23,6 +24,7 @@ $(document).ready(() => {
 			setTimeout(function() {
 				$plusImg.addClass('show');
 			}, 500);
+			console.log('make logo');
 		})
 	}
 
@@ -65,18 +67,19 @@ $(document).ready(() => {
 		startFnGwPlus()
 
 		function startFnGwPlus() {
-			createPluslogo()
-			let locpath = location.pathname
-			setViews(locationPathView[locpath])
-			stopViews(locpath)
-			var _gaq = _gaq || [];
-			_gaq.push(['_setAccount', 'UA-78966622-1']);
-			_gaq.push(['_trackPageview']);
+			createPluslogo();
+			let locpath = location.pathname;
+			setViews(locationPathView[locpath]);
+			stopViews(locpath);
+
+			window._gaq = [];
+			window._gaq.push(['_setAccount', 'UA-78966622-1']);
+			window._gaq.push(['_trackPageview']);
 
 			(function() {
-			  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-			  ga.src = 'https://ssl.google-analytics.com/ga.js';
-			  var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+				var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+				ga.src = 'https://ssl.google-analytics.com/ga.js';
+				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		}
 

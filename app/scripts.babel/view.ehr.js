@@ -24,7 +24,6 @@ class EhrView {
 				that._start()
 			})
 		});
-
 		this._start()
 	}
 
