@@ -41,7 +41,7 @@ $(document).ready(() => {
 				var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
 			})();
 		}
-		
+
     function detectLocChange() {
       if (location.pathname !== pathname || location.hash !== hash) {
         pathname = location.pathname
