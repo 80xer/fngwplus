@@ -28,12 +28,14 @@ class AllNewFnguide {
 
 		if (this.first) {
 			this.first = false
-			this.checkBtn = setInterval (detectBtnRemove, 200)
+			this.checkBtn = setInterval (detectBtnRemove, 400)
 		}
 
 		function detectBtnRemove() {
 			if ($('span.fngw_plus_btn.wbs_show').length <= 0) {
-				that.setView()
+				if (PAGE.TASK_ALL_NEW_FNGUIDE === location.pathname) {
+					that.setView();
+				}
 			}
 		}
 	}

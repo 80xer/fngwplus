@@ -13,12 +13,12 @@ $(document).ready(() => {
 		const $document = $(document)
 		const $html = $('html')
 		const locationPathView = {
-			[PAGE.LOGIN]: [new LoginView()],
-			[PAGE.HOME]: [new DutyView()],
-			[PAGE.EHR]: [new EhrView()],
-			[PAGE.EHRMY]: [new EhrView()],
-			[PAGE.EHRCOMP]: [new EhrCompView()],
-			[PAGE.TASK_ALL_NEW_FNGUIDE]: [new AllNewFnguide()]
+			[PAGE.LOGIN]: [LoginView],
+			[PAGE.HOME]: [DutyView],
+			[PAGE.EHR]: [EhrView],
+			[PAGE.EHRMY]: [EhrView],
+			[PAGE.EHRCOMP]: [EhrCompView],
+			[PAGE.TASK_ALL_NEW_FNGUIDE]: [AllNewFnguide]
 		};
 
 		var imgPath = chrome.extension.getURL('/images/fngwplus.png');
@@ -91,7 +91,11 @@ $(document).ready(() => {
 			}
 
 			for (var i = 0; i < views.length; i++) {
-				checkView(views[i])
+				if (typeof views[i] === 'function')
+					checkView(new views[i]());
+				else {
+					checkView(views[i]);
+				}
 			}
 		}
 
