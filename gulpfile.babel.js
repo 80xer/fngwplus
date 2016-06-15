@@ -77,7 +77,8 @@ gulp.task('chromeManifest', () => {
       background: {
         target: 'scripts/background.js',
         exclude: [
-          'scripts/chromereload.js'
+          'scripts/chromereload.js',
+					'scripts/Omni.js'
         ]
       }
   }))
@@ -99,6 +100,7 @@ gulp.task('buildJs:fngw', () => {
 		'app/scripts.babel/util.js',
 		'app/scripts.babel/view.*.js',
 		'app/scripts.babel/fngwplus.js',
+		'!app/scripts.babel/Omni.js',
 		'!app/scripts.babel/background.js',
 		'!app/scripts.babel/chromereload.js'
 	]
@@ -115,6 +117,7 @@ gulp.task('buildJs:fngw', () => {
 gulp.task('buildJs:chrome', () => {
 	var ctx = {CHROME: true}
 	const src = [
+		'app/scripts.babel/Omni.js',
 		'app/scripts.babel/background.js',
 		'app/scripts.babel/chromereload.js'
 	]

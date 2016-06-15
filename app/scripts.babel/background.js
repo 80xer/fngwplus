@@ -1,4 +1,5 @@
 'use strict';
+var omni = new Omni(localStorage.setup === 'true');
 
 chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
 	if (changeInfo.status !== 'loading') return
@@ -45,6 +46,16 @@ function eachItem(arr, iter, done) {
 	})
 	return eachTask(tasks, done)
 }
+
+chrome.omnibox.onInputChanged.addListener(omni.suggest.bind(omni));
+
+chrome.omnibox.onInputEntered.addListener(
+	function(text) {
+		if (text) {
+			if (text) omni.decide(text);
+		}
+	}
+);
 
 chrome.runtime.onInstalled.addListener(details => {
   console.log('previousVersion', details.previousVersion);

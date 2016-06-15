@@ -1,6 +1,6 @@
 {
   "name": "__MSG_appName__",
-  "version": "3.5.7",
+  "version": "3.6.0",
   "manifest_version": 2,
   "description": "__MSG_appDescription__",
   "icons": {
@@ -10,6 +10,7 @@
   "default_locale": "en",
   "background": {
     "scripts": [
+			"scripts/Omni.js",
       "scripts/chromereload.js",
       "scripts/background.js"
     ]
@@ -19,10 +20,12 @@
 	  "http://gw.fnguide.com/*",
 		"https://docs.google.com/spreadsheets/d/1-abxTWAXe3ncueigz-b9wHCNl32ayNmsBR9Wn-I3aSo/pubhtml",
 		"https://docs.google.com/spreadsheets/d/1CkyanuO1itSFlM4xwzZl2kOks9CdgD82_44oehk2Ue8/edit?usp=sharing",
-		"storage"
+		"storage",
+		"tabs",
+		"history"
   ],
   "omnibox": {
-    "keyword": "OMNIBOX-KEYWORD"
+    "keyword": "fn"
   },
 	"web_accessible_resources": ["images/fngwplus.png"],
 	"content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
