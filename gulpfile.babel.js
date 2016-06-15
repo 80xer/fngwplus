@@ -77,8 +77,7 @@ gulp.task('chromeManifest', () => {
       background: {
         target: 'scripts/background.js',
         exclude: [
-          'scripts/chromereload.js',
-					'scripts/Omni.js'
+          'scripts/chromereload.js'
         ]
       }
   }))
