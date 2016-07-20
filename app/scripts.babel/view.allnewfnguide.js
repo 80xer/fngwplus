@@ -46,7 +46,7 @@ class AllNewFnguide {
     var $btnToggleWbs = $(BTN_WBS_TEMPLATE);
     $btnToggleWbs.appendTo('#content .content_top');
     $btnToggleWbs.click(function() {
-        that._toggleWbs();
+      that._toggleWbs();
     });
 	}
 
@@ -75,32 +75,34 @@ class AllNewFnguide {
   }
 
 	_createBtnFilters() {
-        var $btnWrap = $('<div class="filters task fngw_plus_btn_wrapper"></div>');
-        $btnWrap.append('<span class="fngw_plus_btn all active">전체</span>');
+		$('.filters.task.fngw_plus_btn_wrapper').remove();
+    var $btnWrap = $('<div class="filters task fngw_plus_btn_wrapper"></div>');
+    $btnWrap.append('<span class="fngw_plus_btn all active">전체</span>');
 
-				for (var i = 0; i < CATE.length; i++) {
-					$btnWrap.append('<span class="fngw_plus_btn" data-cate="[' + CATE[i]+ ']">' + CATE[i] + '</span>');
-				}
+		for (var i = 0; i < CATE.length; i++) {
+			$btnWrap.append('<span class="fngw_plus_btn" data-cate="[' + CATE[i]+ ']">' + CATE[i] + '</span>');
+		}
 
-				$btnWrap.appendTo('.critical.custom_header');
+		$btnWrap.appendTo('.critical.custom_header');
 
-        $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn').not('.all').on('click', function() {
-            var filterString = $(this).text();
-            $('#searchTypes').val('TITLE');
-            $('#searchKeyword').val($(this).data('cate'));
-            $('#searchBtn').click();
-            setActiveFilter();
-        });
+    $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn').not('.all')
+		.on('click', function() {
+      var filterString = $(this).text();
+      $('#searchTypes').val('TITLE');
+      $('#searchKeyword').val($(this).data('cate'));
+      $('#searchBtn').click();
+      setActiveFilter();
+    });
 
-        $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn.all').on('click', function() {
-            $('#sideFolderList li.task[data-item="companyFolder160"] p').click();
-        });
+    $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn.all').on('click', function() {
+      $('#sideFolderList li.task[data-item="companyFolder160"] p').click();
+    });
 
-        function setActiveFilter() {
-            $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn').removeClass('active');
-            $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn').filter(function() {
-							return $('#searchKeyword').val().indexOf($(this).text()) >= 0 ? true : false
-						}).addClass('active');
-        }
+    function setActiveFilter() {
+      $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn').removeClass('active');
+      $('.filters.fngw_plus_btn_wrapper .fngw_plus_btn').filter(function() {
+				return $('#searchKeyword').val().indexOf($(this).text()) >= 0 ? true : false
+			}).addClass('active');
     }
+  }
 }
