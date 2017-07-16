@@ -199,7 +199,6 @@ gulp.task('build', (cb) => {
     'size', cb);
 });
 
-
 gulp.task('default', ['clean'], cb => {
   runSequence('build', cb);
 });
